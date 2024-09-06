@@ -1,0 +1,15 @@
+{
+  "name": "04-aplicacion-consola-interactiva",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "inquirer": "^10.2.0"
+  }
+}
