@@ -8,13 +8,11 @@ const preguntas = [
     name: 'opcion',
     message: '¿Qué desea hacer?',
     choices: [
-      { value: '1', name: `1. green Crear Tarea` },
+      { value: '1', name: `1. Crear Tarea` },
       { value: '2', name: `2. Alistar Tarea` },
-      { value: '3', name: `3 .green Listar Tareas Pendientes` },
-      { value: '4', name: `4. Listar Tareas Completadas` },
-      { value: '5', name: `5. Completar Tarea (s)` },
-      { value: '6', name: `6. Borrar Tarea` },
-      { value: '7', name: `7. Salir` }
+      { value: '3', name: `3. Actualizar Tarea (s)` },
+      { value: '4', name: `4. Borrar Tarea` },
+      { value: '5', name: `5. Salir` }
     ],
   }
 ];
@@ -25,28 +23,47 @@ const inquireMenu = async () => {
   console.log(' Que deseas Hacer '.green);
   console.log('##################\n'.green);
 
-  const prompt = inquirer.createPromptModule();  // Creación de un módulo independiente
+  const prompt = inquirer.createPromptModule();
   const { opcion } = await prompt(preguntas);
   return opcion;
 }
 
-
-const pausa = async ()=>{
+const leerInput = async (message) => {
   const question = [
     {
       type: 'input',
-      name: 'enter',
-      message: `Presione ${'enter'.green} para continuar`
+      name: 'input',
+      message,
+      validate: (value) => {
+        if (value.length === 0) {
+          return 'Por favor ingrese un valor '
+        }
+        return true
+      },
     }
   ];
-  const prompt= inquirer.createPromptModule();
-  console.log('\n');
-  await prompt(question);
+  try {
+    const prompt = inquirer.createPromptModule()
+    const { input } = await prompt(question);
+    return input;
+  } catch (err) {
+    console.error('Error:', err);
+  }
 }
 
+const pausa = async () => {
+  const prompt = inquirer.createPromptModule()
+  await prompt({
+    type: 'input',
+    name: 'pause',
+    message: 'Presiona una tecla para continuar'
+  })
+  console.log('Continuado...')
+}
 
 
 module.exports = {
   inquireMenu,
+  leerInput,
   pausa
 };
